@@ -7,31 +7,38 @@ const User = require('../models/user.js');
 
 // Register a new user
 router.post('/register', async (req, res) => {
-    const { name, registration_number, branch, phone_number, email, password } = req.body;
+    const { name, registration_number, branch, phone_number, email, password, batch } = req.body;
     try {
         // Check if password is present and non-empty
         if (!password || password.trim().length === 0) {
             return res.status(400).json({ message: 'Password is required' });
         }
-        console.log(userData.social_handles); 
         // Hash the password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
+        // Generate Zairza ID
+        const userCount = await User.countDocuments({ batch }); // Count number of users in batch
+        const zairzaID = `ZA${batch.toString().padStart(2, '0')}${(userCount + 1).toString().padStart(3, '0')}`;
+
         // Create a new user
-        const newUser = new User({
+        let newUser = new User({
             name,
             registration_number,
             branch,
             phone_number,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            zairza_id: zairzaID,
+            batch
         });
+
+        console.log(newUser);
 
         // Save the new user to the database
         await newUser.save();
 
-        res.json({ message: 'User registered successfully' });
+        res.json({ message: newUser });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });

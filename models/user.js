@@ -53,7 +53,8 @@ const userSchema = new Schema({
         }
     }],
     key_possession: {
-        type: Boolean
+        type: Boolean,
+        default: false
     },
     batch: {
         type: String
