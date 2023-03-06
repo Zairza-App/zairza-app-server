@@ -1,36 +1,3 @@
-// const express = require('express');
-// const bodyParser = require('body-parser');
-// const cors = require('cors');
-// const mongoose = require('mongoose');
-
-// const app = express();
-
-// // Middleware
-// app.use(bodyParser.json());
-// app.use(cors());
-
-// // Database connection
-// mongoose.set("strictQuery", false);
-
-// mongoose.connect('mongodb+srv://ashishmohapatra240:zairza123@cluster0.jzbr5aw.mongodb.net/?retryWrites=true&w=majority', {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// });
-
-
-
-// // Routes
-// app.get('/', (req, res) => {
-//     res.send('Hello, world!');
-// });
-
-// // Start server
-// const port = process.env.PORT || 3000;
-// app.listen(port, () => {
-//     console.log(`Server started on port ${port}`);
-// });
-
-
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');

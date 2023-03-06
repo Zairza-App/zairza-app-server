@@ -18,8 +18,9 @@ router.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         // Generate Zairza ID
-        const userCount = await User.countDocuments({ batch }); // Count number of users in batch
-        const zairzaID = `ZA${batch.toString().padStart(2, '0')}${(userCount + 1).toString().padStart(3, '0')}`;
+        const userCount = await User.countDocuments({ batch });
+        const randomDigits = Math.floor(Math.random() * 1000);
+        const zairzaID = `ZA${batch.toString().slice(-2)}I${(userCount + 1).toString().padStart(3, '0')}${randomDigits.toString().padStart(3, '0')}`;
 
         // Create a new user
         let newUser = new User({
@@ -38,7 +39,7 @@ router.post('/register', async (req, res) => {
         // Save the new user to the database
         await newUser.save();
 
-        res.json({ message: newUser });
+        res.json({ message: 'User registered successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
