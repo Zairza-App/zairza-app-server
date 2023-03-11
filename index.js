@@ -1,9 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const authRouter = require('./routes/auth');
+const routes = require('./routes/index');
 const auth = require('./middlewares/auth');
-const adminRouter = require('./routes/admin');
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,14 +25,8 @@ mongoose.connection.on('error', (err) => {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-    res.send('Hello, world!');
-});
-
-app.use('/auth', authRouter);
-app.use('/admin', adminRouter);
+app.use('/', routes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
-module.exports = app;
