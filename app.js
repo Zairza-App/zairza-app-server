@@ -1,9 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const userRouter = require('./routes/user');
 const authRouter = require('./routes/auth');
 const auth = require('./middlewares/auth');
+const adminRouter = require('./routes/admin');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -29,8 +29,8 @@ app.get('/', (req, res) => {
     res.send('Hello, world!');
 });
 
-app.use('/users', auth, userRouter);
 app.use('/auth', authRouter);
+app.use('/admin', adminRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
